@@ -2,6 +2,7 @@ package com.example.alisi.mapalarm;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -28,7 +29,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+private int i=1;
     private GoogleMap mMap;
     private LatLng latLng;
     private Location mLocation = null;
@@ -39,7 +40,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public Circle circle;
     private int distance = 0;
     private int vibratetime = 500;
-    private boolean vibration = false;
+    private boolean vibration = true;
+    private boolean ringoption = true;
+    private String alarmname;
+    private String alarmmessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         distance = extra.getInt("DISTANCE");
         vibratetime = extra.getInt("VIBRATETIME");
         vibration = extra.getBoolean("VIBRATION");
+//        alarmname = extra.getString("ALARMNAME");
+//        alarmmessage = extra.getString("ALARMMESSAGE");
+        ringoption = extra.getBoolean("RINGOPTION");
+
 
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -61,20 +69,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onLocationChanged(Location location) {
                 mLocation = location;
-                Vibrator vibrator = (Vibrator) MapsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                //Vibrator vibrator = (Vibrator) MapsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                 Log.d("Deneme", mLocation.toString());
 
-                if (distance(mLocation.getLongitude(), mLocation.getLatitude(), target.longitude, target.latitude) < distance) {
-                    if(vibration)
-                    {
-                        vibrator.vibrate(vibratetime);
-                        Log.d("Vibrate", "tırrrr");
+                if (distance(mLocation.getLatitude(), mLocation.getLongitude(), target.latitude, target.longitude) < distance) {
+
+                    //vibrator.vibrate(vibratetime);
+                    if(i<2){
+                        Log.d("Deneme", "tırrrr");
+                        Intent intent = new Intent(MapsActivity.this, AlarmActivity.class);
+                        intent.putExtra("VIBRATIONTIME", vibratetime);
+//                        intent.putExtra("ALARMNAMEE", alarmname);
+//                        intent.putExtra("ALARMMESSAGEE", alarmmessage);
+                        intent.putExtra("VIBRATIONOPTION", vibration);
+                        intent.putExtra("RINGOPTIONN", ringoption);
+                        startActivity(intent);
+                        i++;
                     }
 
-                } else {
-                    if (vibrator != null) {
-                        vibrator.cancel();
-                    }
+                }
+                else
+                {
+                    Log.d("Deneme" , "TIRRIRIRIRIRI");
                 }
             }
 
