@@ -14,14 +14,9 @@ public class AlarmActivity extends AppCompatActivity {
     private int vibrationTime;
     private Button btnStop;
     private Vibrator vibrator;
-    public String alarmname;
-    public String alarmmessage;
-    private boolean alarmStop = true;
     public boolean novibrate;
     public boolean noring;
 
-    private TextView tvAlarmName;
-    private TextView tvAlarmMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,24 +26,14 @@ public class AlarmActivity extends AppCompatActivity {
 
         Bundle extra = getIntent().getExtras();
         vibrationTime = extra.getInt("VIBRATIONTIME");
-//        alarmname = extra.getString("ALARMNAMEE", "Gelmedi");
-//        alarmmessage = extra.getString("ALARMMESSAGEE", "Gelmedi");
         noring = extra.getBoolean("RINGOPTIONN");
         novibrate = extra.getBoolean("VIBRATIONOPTION");
 
-        Log.d("Deneme",alarmname);
-        Log.d("Deneme",alarmmessage);
-
-        tvAlarmName = (TextView) findViewById(R.id.tvAlarmName);
-        tvAlarmMessage = (TextView) findViewById(R.id.tvAlarmMessage);
-
-//        tvAlarmMessage.setText(alarmmessage);
-//        tvAlarmName.setText(alarmname);
 
 
 
         vibrator = (Vibrator) AlarmActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-        final MediaPlayer mediaPlayer = MediaPlayer.create(AlarmActivity.this, R.raw.alarm);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(AlarmActivity.this, R.raw.elegant_ringtone);
 
         if(noring == true && novibrate == true)
         {
@@ -67,9 +52,6 @@ public class AlarmActivity extends AppCompatActivity {
         {
 
         }
-
-
-
 
         btnStop = (Button) findViewById(R.id.btnStop);
         btnStop.setOnClickListener(new View.OnClickListener() {

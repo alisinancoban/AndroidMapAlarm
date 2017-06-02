@@ -20,16 +20,11 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox vibrate = null;
     private CheckBox ringg = null;
     private Toast toast = null;
-    private EditText etalarmName = null;
-    private EditText etAlarmMessage = null;
     private Button btnMap = null;
     private SeekBar vibraterange = null;
     private TextView tvVibrateTime = null;
-    private Button btnSave = null;
 
 
-    public String alarmName = "";
-    public String alarmMessage = "";
     public int progressChanged = 0;
     public boolean vibration = true;
     public boolean ring = true;
@@ -43,16 +38,9 @@ public class MainActivity extends AppCompatActivity {
         distance = (TextView) findViewById(R.id.tvDistance);
         vibrate = (CheckBox) findViewById(R.id.vibration);
         ringg = (CheckBox) findViewById(R.id.ring);
-        etAlarmMessage = (EditText) findViewById(R.id.editText4);
-        etalarmName = (EditText) findViewById(R.id.editText3);
         btnMap = (Button) findViewById(R.id.button8);
         vibraterange = (SeekBar) findViewById(R.id.seekBar);
         tvVibrateTime = (TextView) findViewById(R.id.tvVibrate);
-        btnSave = (Button) findViewById(R.id.button9);
-
-
-        alarmName = etalarmName.getText().toString();
-        alarmMessage = etAlarmMessage.getText().toString();
 
         vibraterange.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -78,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-               progressChanged = progress;
+               progressChanged = progress + 1000;
                 distance.setText(progressChanged + " mt");
             }
 
@@ -154,15 +142,11 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("DISTANCE", progressChanged);
                 intent.putExtra("VIBRATETIME", vibrateTime);
                 intent.putExtra("VIBRATION" , vibration);
-//                intent.putExtra("ALARMNAME", alarmName);
-//                intent.putExtra("ALARMMESSAGE", alarmMessage);
                 intent.putExtra("RINGOPTION", ring);
 
                 Log.d("Deneme" , ""+ progressChanged);
                 Log.d("Deneme" , ""+ vibrateTime);
                 Log.d("Deneme" , ""+ vibration);
-                Log.d("Deneme" , ""+ alarmName);
-                Log.d("Deneme" , ""+ alarmMessage);
                 Log.d("Deneme" , ""+ ring);
                 Log.d("Deneme" , ""+ vibration);
                 startActivity(intent);
